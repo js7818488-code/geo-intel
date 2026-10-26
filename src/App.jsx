@@ -136,7 +136,16 @@ const [analysisId] = useState(`GEO-${Math.floor(Math.random() * 100000)}`)
   
 
   function resetImages() {
-    function downloadReport() {
+   
+    if (beforeImage) URL.revokeObjectURL(beforeImage.url)
+    if (afterImage) URL.revokeObjectURL(afterImage.url)
+    setBeforeImage(null)
+    setAfterImage(null)
+    setNotice('Images cleared.')
+    if (beforeRef.current) beforeRef.current.value = ''
+    if (afterRef.current) afterRef.current.value = ''
+  }
+ function downloadReport() {
   if (!changeResult) return
 
   const report = `
@@ -169,15 +178,6 @@ Results are based on pixel comparison and require human verification.
 
   URL.revokeObjectURL(url)
 }
-    if (beforeImage) URL.revokeObjectURL(beforeImage.url)
-    if (afterImage) URL.revokeObjectURL(afterImage.url)
-    setBeforeImage(null)
-    setAfterImage(null)
-    setNotice('Images cleared.')
-    if (beforeRef.current) beforeRef.current.value = ''
-    if (afterRef.current) afterRef.current.value = ''
-  }
-
   return (
     <div className="app-shell">
       <aside className="sidebar">
